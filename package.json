@@ -10,7 +10,7 @@
     "build:css-pages": "postcss styles/pages/*.pcss --dir src/assets/styles/pages --ext css",
     "build:css-main": "postcss styles/main.pcss -o src/assets/styles/index.css",
     "build:js": "react-scripts build",
-    "build": "npm-run-all build:css-* build:js",
+    "build": "npm-run-all -s build:css-* build:js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
