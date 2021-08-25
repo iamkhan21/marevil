@@ -2,25 +2,48 @@
   "name": "evils",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "watch:css-pages": "postcss styles/pages/*.pcss --dir src/assets/styles/pages --ext css -w",
+    "watch:css-main": "postcss styles/main.pcss -o src/assets/styles/index.css -w",
+    "start:js": "react-scripts start",
+    "start": "npm-run-all -p watch:css-* start:js",
+    "build:css-pages": "postcss styles/pages/*.pcss --dir src/assets/styles/pages --ext css",
+    "build:css-main": "postcss styles/main.pcss -o src/assets/styles/index.css",
+    "build:js": "react-scripts build",
+    "build": "npm-run-all build:css-* build:js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
+    "await-of": "^3.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "userbase-js": "^2.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^27.0.1",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "@types/react-router-dom": "^5.1.8",
+    "cssnano": "^5.0.8",
+    "cssnano-preset-advanced": "^5.1.4",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.6",
+    "postcss-cli": "^8.3.1",
+    "postcss-extend": "^1.0.5",
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.3.2",
     "react-scripts": "4.0.3",
+    "ts-jest": "^27.0.5",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

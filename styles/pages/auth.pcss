@@ -1,0 +1,36 @@
+@import "../components/form.pcss";
+
+.page__auth {
+  padding-top: 20vh;
+
+  @media (max-height: 860px) {
+    @extend .centered;
+    padding-top: 0;
+  }
+}
+
+.form__auth {
+  max-width: 450px;
+  margin-inline: auto;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--white);
+  background-color: var(--white);
+
+  .input__labeled .label {
+    min-width: 85px;
+  }
+
+  .form__field:first-of-type,
+  .form__field:last-of-type {
+    margin-top: 20px;
+  }
+
+  .form__field:last-of-type {
+    margin-bottom: 3px;
+  }
+
+  .btn__submit {
+    width: 100%;
+  }
+}
