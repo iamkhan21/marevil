@@ -7,7 +7,7 @@ import {
 } from "../components/auth/AuthProvider";
 import { UserCreds } from "../components/auth/AuthProvider/types";
 import { useHistory } from "react-router-dom";
-import { PageRoutes } from "./routes";
+import { PageRoutes } from "../configs/routes";
 
 const Signup: React.FC = () => {
   const history = useHistory();
@@ -15,10 +15,11 @@ const Signup: React.FC = () => {
 
   const onSignUp = useCallback(async (creds: UserCreds, callback) => {
     const error = await signUp(creds);
+
     callback(error);
 
     if (!error) {
-      history.push(PageRoutes.Dashboard);
+      history.push(PageRoutes.Profile);
     }
   }, []);
 

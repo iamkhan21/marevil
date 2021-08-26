@@ -6,13 +6,14 @@
     "watch:css-pages": "postcss styles/pages/*.pcss --dir src/assets/styles/pages --ext css -w",
     "watch:css-main": "postcss styles/main.pcss -o src/assets/styles/index.css -w",
     "start:js": "react-scripts start",
-    "start": "npm-run-all -p watch:css-* start:js",
+    "start": "run-p watch:css-* start:js",
     "build:css-pages": "postcss styles/pages/*.pcss --dir src/assets/styles/pages --ext css",
     "build:css-main": "postcss styles/main.pcss -o src/assets/styles/index.css",
     "build:js": "react-scripts build",
-    "build": "npm-run-all -s build:css-* build:js",
+    "build": "cross-env NODE_ENV=production run-s build:css-* build:js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "update:deps": "yarn upgrade-interactive --latest && yarn upgrade",
+    "update:cssdb": "npx browserslist@latest --update-db"
   },
   "dependencies": {
     "await-of": "^3.1.1",
@@ -23,13 +24,14 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
-    "@types/node": "^12.0.0",
+    "@types/node": "^16.7.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.8",
+    "cross-env": "^7.0.3",
     "cssnano": "^5.0.8",
     "cssnano-preset-advanced": "^5.1.4",
     "npm-run-all": "^4.1.5",
@@ -43,7 +45,7 @@
     "react-scripts": "4.0.3",
     "ts-jest": "^27.0.5",
     "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^2.1.0"
   },
   "eslintConfig": {
     "extends": [

@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import renderWithRouter from "../../../__tests__/testUtils/renderWithRouter";
-import { PageRoutes } from "../../pages/routes";
+import { PageRoutes } from "../../configs/routes";
 import { UserCreds } from "./AuthProvider/types";
 
 const user = {

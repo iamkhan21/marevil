@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import InputWithLabel from "../shared/InputWithLabel";
+import InputWithLabel from "../shared/forms/InputWithLabel";
 import { UserCreds } from "./AuthProvider/types";
+import FormField from "../shared/forms/FormField";
+import Button from "../shared/Button";
 
 interface State {
   username: string;
@@ -15,13 +17,14 @@ interface Props {
 }
 
 class LoginForm extends PureComponent<Props, State> {
-  alive = true;
   state = {
     username: "",
     password: "",
     loading: false,
     signin_error: "",
   };
+  private alive = true;
+  private formRef = React.createRef<HTMLFormElement>();
 
   onChange = ({
     currentTarget: { value, name },
@@ -39,16 +42,22 @@ class LoginForm extends PureComponent<Props, State> {
     const { username, password } = this.state;
 
     if (this.isFormValid()) {
+      this.formRef.current?.classList.remove("head-shake");
       this.setState({ loading: true });
 
       this.props.signIn(
         { username: username.trim(), password: password.trim() },
         (error) => {
-          this.alive &&
+          if (this.alive) {
             this.setState({
               loading: false,
               signin_error: error || "",
             });
+
+            if (error) {
+              this.formRef.current?.classList.add("head-shake");
+            }
+          }
         }
       );
     }
@@ -62,9 +71,13 @@ class LoginForm extends PureComponent<Props, State> {
     const { username, password, loading, signin_error } = this.state;
     const formValid = this.isFormValid();
     return (
-      <form className="form form__auth" onSubmit={this.onSubmit}>
+      <form
+        className="form form__auth animated"
+        onSubmit={this.onSubmit}
+        ref={this.formRef}
+      >
         <h3>Login</h3>
-        <div className={"form__field"}>
+        <FormField>
           <InputWithLabel
             value={username}
             onChange={this.onChange}
@@ -76,8 +89,8 @@ class LoginForm extends PureComponent<Props, State> {
             data-testid={"username"}
             required
           />
-        </div>
-        <div className={"form__field"}>
+        </FormField>
+        <FormField>
           <InputWithLabel
             value={password}
             onChange={this.onChange}
@@ -89,18 +102,19 @@ class LoginForm extends PureComponent<Props, State> {
             data-testid={"password"}
             required
           />
-        </div>
-        <div className={"form__field"}>
-          <button
+        </FormField>
+        <FormField>
+          <Button
             type={"submit"}
-            className={"btn btn__primary btn__submit"}
+            className={"btn__submit"}
             disabled={loading || !formValid}
             data-testid={"btn_submit"}
+            appearance={"primary"}
           >
             {loading ? "Processing login..." : "Log in"}
-          </button>
+          </Button>
           <p className={"form__field__error"}>{signin_error}</p>
-        </div>
+        </FormField>
         <Link className={"dark-text"} to="/signup" data-testid={"link"}>
           <small>Need account? Signup is here.</small>
         </Link>

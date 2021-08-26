@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "./context";
+import { AuthContextProps, useAuthContext } from "./context";
 
 const CheckingAuthMsg: React.FC = () => (
   <>
@@ -44,10 +44,12 @@ const StateMsgWrap: React.FC = (props) => (
   </article>
 );
 
+type UseAuthContextHook = () => Pick<AuthContextProps, "state">;
+
 export function withAuthorization<TProps>(
   WrappedComponent: React.ComponentType<TProps>,
-  needAuth = true,
-  useAuthContextHook = useAuthContext
+  needAuth: boolean = true,
+  useAuthContextHook: UseAuthContextHook = useAuthContext
 ) {
   return (props: TProps) => {
     const {

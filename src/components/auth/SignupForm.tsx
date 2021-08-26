@@ -1,12 +1,14 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import InputWithLabel from "../shared/InputWithLabel";
+import InputWithLabel from "../shared/forms/InputWithLabel";
 import { debounce } from "../../utils/timings";
 import {
   checkPasswordMinLength,
   checkUsernameMinLength,
 } from "../../utils/validators";
 import { generateCredentialError } from "./errors";
+import FormField from "../shared/forms/FormField";
+import Button from "../shared/Button";
 
 interface State {
   username: string;
@@ -30,7 +32,6 @@ interface Props {
 }
 
 class SignupForm extends PureComponent<Props, State> {
-  alive = true;
   state = {
     username: "",
     password: "",
@@ -41,7 +42,8 @@ class SignupForm extends PureComponent<Props, State> {
       signup: "",
     },
   };
-
+  private formRef = React.createRef<HTMLFormElement>();
+  private alive = true;
   validateField = debounce((name: string) => {
     const { username, password, errors } = this.state;
     let { username: usrnmErr, password: pswdErr } = errors;
@@ -90,16 +92,22 @@ class SignupForm extends PureComponent<Props, State> {
     const { username, password, errors } = this.state;
 
     if (this.isFormValid()) {
+      this.formRef.current?.classList.remove("head-shake");
       this.setState({ loading: true });
 
       this.props.signUp(
         { username: username.trim(), password: password.trim() },
         (error) => {
-          this.alive &&
+          if (this.alive) {
             this.setState({
               loading: false,
               errors: { ...errors, signup: error || "" },
             });
+
+            if (error) {
+              this.formRef.current?.classList.add("head-shake");
+            }
+          }
         }
       );
     }
@@ -114,9 +122,13 @@ class SignupForm extends PureComponent<Props, State> {
     const formValid = this.isFormValid();
 
     return (
-      <form className="form form__auth" onSubmit={this.onSubmit}>
+      <form
+        className="form form__auth animated"
+        onSubmit={this.onSubmit}
+        ref={this.formRef}
+      >
         <h3>Signup</h3>
-        <div className={"form__field"}>
+        <FormField>
           <InputWithLabel
             value={username}
             onChange={this.onChange}
@@ -131,8 +143,8 @@ class SignupForm extends PureComponent<Props, State> {
           {errors.username && (
             <p className={"form__field__error"}>{errors.username}</p>
           )}
-        </div>
-        <div className={"form__field"}>
+        </FormField>
+        <FormField>
           <InputWithLabel
             value={password}
             onChange={this.onChange}
@@ -147,18 +159,19 @@ class SignupForm extends PureComponent<Props, State> {
           {errors.password && (
             <p className={"form__field__error"}>{errors.password}</p>
           )}
-        </div>
-        <div className={"form__field"}>
-          <button
+        </FormField>
+        <FormField>
+          <Button
+            appearance={"success"}
             type={"submit"}
-            className={"btn btn__success btn__submit"}
+            className={"btn__submit"}
             disabled={loading || !formValid}
             data-testid={"btn_submit"}
           >
             {loading ? "Processing signup..." : "Sign up"}
-          </button>
+          </Button>
           <p className={"form__field__error"}>{errors.signup}</p>
-        </div>
+        </FormField>
         <Link className={"dark-text"} to="/login" data-testid={"link"}>
           <small>Already have account? Login is here.</small>
         </Link>

@@ -1,13 +1,19 @@
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { PageRoutes, routes } from "../../pages/routes";
+import { PageRoutes, routes } from "../../configs/routes";
 import { useAuthState } from "../auth/AuthProvider";
+import Button from "../shared/Button";
+import { AuthStore } from "../auth/AuthProvider/types";
 
-const Header: React.FC = () => {
+interface Props {
+  useAuthStateHook?: () => Pick<AuthStore, "state" | "signOut">;
+}
+
+const Header: React.FC<Props> = ({ useAuthStateHook = useAuthState }) => {
   const {
     state: { user, loading },
     signOut,
-  } = useAuthState();
+  } = useAuthStateHook();
   const history = useHistory();
 
   const onSignOut = async () => {
@@ -47,9 +53,9 @@ const Header: React.FC = () => {
         {!loading && links}
       </nav>
       {!loading && user && (
-        <button onClick={onSignOut} className={"btn btn__signout"}>
+        <Button onClick={onSignOut} className={"btn__signout"}>
           Sign out
-        </button>
+        </Button>
       )}
     </header>
   );

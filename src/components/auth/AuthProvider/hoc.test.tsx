@@ -9,9 +9,8 @@ const TestComponent: React.FC<any> = () => <div>Test Page</div>;
 describe("AuthProvider HOCs", function () {
   describe("withAuthorization", function () {
     it("should show loading message", function () {
-      const mockContextHook = (): AuthContextProps => ({
+      const mockContextHook = () => ({
         state: { user: null, loading: true },
-        dispatch: jest.fn,
       });
 
       const Component = withAuthorization(TestComponent, true, mockContextHook);
@@ -21,9 +20,8 @@ describe("AuthProvider HOCs", function () {
       expect(container.textContent).toMatch("Checking authorization...");
     });
     it("should show unauthorized message", function () {
-      const mockContextHook = (): AuthContextProps => ({
+      const mockContextHook = () => ({
         state: { user: null, loading: false },
-        dispatch: jest.fn,
       });
 
       const Component = withAuthorization(TestComponent, true, mockContextHook);
@@ -33,7 +31,7 @@ describe("AuthProvider HOCs", function () {
       expect(container.textContent).toMatch("Sorry, we can't recognise you.");
     });
     it("should show already authenticated message", function () {
-      const mockContextHook = (): AuthContextProps => ({
+      const mockContextHook = () => ({
         state: {
           user: {
             userId: "2",
@@ -42,7 +40,6 @@ describe("AuthProvider HOCs", function () {
           },
           loading: false,
         },
-        dispatch: jest.fn,
       });
 
       const Component = withAuthorization(

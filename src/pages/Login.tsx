@@ -7,7 +7,7 @@ import {
 } from "../components/auth/AuthProvider";
 import { UserCreds } from "../components/auth/AuthProvider/types";
 import { useHistory } from "react-router-dom";
-import { PageRoutes } from "./routes";
+import { PageRoutes } from "../configs/routes";
 
 const Login = () => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const Login = () => {
     callback(error);
 
     if (!error) {
-      history.push(PageRoutes.Dashboard);
+      history.push(PageRoutes.Profile);
     }
   }, []);
   return (

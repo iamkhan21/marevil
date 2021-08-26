@@ -1,9 +1,6 @@
 import { UserResult } from "userbase-js";
 
-export type User = Pick<
-  UserResult,
-  "userId" | "username" | "email" | "authToken"
->;
+export type User = Partial<UserResult>;
 
 export type AuthReducerActions = {
   type: AuthActions.SET_USER;
