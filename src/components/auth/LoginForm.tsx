@@ -75,18 +75,19 @@ class LoginForm extends PureComponent<Props, State> {
         className="form form__auth animated"
         onSubmit={this.onSubmit}
         ref={this.formRef}
+        aria-labelledby="login"
       >
-        <h3>Login</h3>
+        <h3 id="login">Login</h3>
         <FormField>
           <InputWithLabel
             value={username}
             onChange={this.onChange}
-            label={"Username"}
-            name={"username"}
-            type={"text"}
             disabled={loading}
+            label="Username"
+            name="username"
+            type="text"
             autoComplete="username"
-            data-testid={"username"}
+            data-testid="username"
             required
           />
         </FormField>
@@ -94,28 +95,32 @@ class LoginForm extends PureComponent<Props, State> {
           <InputWithLabel
             value={password}
             onChange={this.onChange}
-            label={"Password"}
-            name={"password"}
-            type={"password"}
-            autoComplete="password"
             disabled={loading}
-            data-testid={"password"}
+            label="Password"
+            name="password"
+            type="password"
+            autoComplete="password"
+            data-testid="password"
             required
           />
         </FormField>
         <FormField>
           <Button
-            type={"submit"}
-            className={"btn__submit"}
             disabled={loading || !formValid}
-            data-testid={"btn_submit"}
-            appearance={"primary"}
+            type="submit"
+            className="btn__submit"
+            data-testid="btn_submit"
+            appearance="primary"
           >
             {loading ? "Processing login..." : "Log in"}
           </Button>
-          <p className={"form__field__error"}>{signin_error}</p>
+          {signin_error && (
+            <p className="form__field__error" role="alert">
+              {signin_error}
+            </p>
+          )}
         </FormField>
-        <Link className={"dark-text"} to="/signup" data-testid={"link"}>
+        <Link className="dark-text" to="/signup" data-testid="link">
           <small>Need account? Signup is here.</small>
         </Link>
       </form>

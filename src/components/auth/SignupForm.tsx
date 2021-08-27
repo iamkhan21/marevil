@@ -126,53 +126,62 @@ class SignupForm extends PureComponent<Props, State> {
         className="form form__auth animated"
         onSubmit={this.onSubmit}
         ref={this.formRef}
+        aria-labelledby="signup"
       >
-        <h3>Signup</h3>
+        <h3 id="signup">Signup</h3>
         <FormField>
           <InputWithLabel
             value={username}
             onChange={this.onChange}
-            name={"username"}
-            label={"Username"}
-            type={"text"}
             disabled={loading}
+            name="username"
+            label="Username"
+            type="text"
             autoComplete="username"
-            data-testid={"username"}
+            data-testid="username"
             required
           />
           {errors.username && (
-            <p className={"form__field__error"}>{errors.username}</p>
+            <p className="form__field__error" role="alert">
+              {errors.username}
+            </p>
           )}
         </FormField>
         <FormField>
           <InputWithLabel
             value={password}
             onChange={this.onChange}
-            label={"Password"}
-            name={"password"}
-            type={"password"}
-            autoComplete="new-password"
             disabled={loading}
-            data-testid={"password"}
+            label="Password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            data-testid="password"
             required
           />
           {errors.password && (
-            <p className={"form__field__error"}>{errors.password}</p>
+            <p className="form__field__error" role="alert">
+              {errors.password}
+            </p>
           )}
         </FormField>
         <FormField>
           <Button
-            appearance={"success"}
-            type={"submit"}
-            className={"btn__submit"}
+            appearance="success"
+            type="submit"
+            className="btn__submit"
             disabled={loading || !formValid}
-            data-testid={"btn_submit"}
+            data-testid="btn_submit"
           >
             {loading ? "Processing signup..." : "Sign up"}
           </Button>
-          <p className={"form__field__error"}>{errors.signup}</p>
+          {errors.signup && (
+            <p className="form__field__error" role="alert">
+              {errors.signup}
+            </p>
+          )}
         </FormField>
-        <Link className={"dark-text"} to="/login" data-testid={"link"}>
+        <Link className="dark-text" to="/login" data-testid="link">
           <small>Already have account? Login is here.</small>
         </Link>
       </form>
